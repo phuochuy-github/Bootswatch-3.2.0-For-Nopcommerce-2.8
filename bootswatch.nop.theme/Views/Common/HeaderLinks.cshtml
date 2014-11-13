@@ -1,0 +1,66 @@
+﻿@model HeaderLinksModel
+@using Nop.Web.Models.Common;
+
+    <ul class="nav nav-pills header-links" style="float: right;">
+        @Html.Widget("header_links_before")
+        @if (Model.IsAuthenticated)
+        {
+            <li><a href="@Url.RouteUrl("CustomerInfo")" class="account">@Model.CustomerEmailUsername</a></li>
+            <li><a href="@Url.RouteUrl("Logout")" class="ico-logout">@T("Account.Logout")</a></li>
+            
+            if (Model.AllowPrivateMessages)
+            {
+                <li><a href="@Url.RouteUrl("PrivateMessages", new { tab = "" })" class="ico-inbox">@T("PrivateMessages.Inbox")</a>
+                    @Model.UnreadPrivateMessages</li>
+                if (!string.IsNullOrEmpty(Model.AlertMessage))
+                {
+                    <script type="text/javascript">
+                        $(document).ready(function () {
+                            displayPopupNotification('@(Model.AlertMessage)', 'success', false);
+                        });
+                    </script>
+                }
+            }
+        }
+        else
+        {
+            <li><a href="@Url.RouteUrl("Register")" class="ico-register">@T("Account.Register")</a></li>
+            <li><a href="@Url.RouteUrl("Login")" class="ico-login">@T("Account.Login")</a></li>
+        }
+        @if (Model.ShoppingCartEnabled)
+        {
+            <li id="topcartlink">
+                @*<a href="@Url.RouteUrl("ShoppingCart")" class="ico-cart">@T("ShoppingCart") 
+                    <span class="cart-qty badge">(@Model.ShoppingCartItems)</span></a>*@
+                <a href="@Url.RouteUrl("ShoppingCart")" class="ico-cart">
+                    <img src="@Url.Content("~/Themes/bootswatch.nop.theme/Images/shopping-cart-icon-24.png")" />
+                    <span class="cart-qty badge">(@Model.ShoppingCartItems)</span>
+                </a>
+            </li>
+        }
+        @if (Model.WishlistEnabled)
+        {
+            <li><a href="@Url.RouteUrl("Wishlist")" class="ico-wishlist">@T("Wishlist") <span class="wishlist-qty badge">
+                                                                                                (@Model.WishlistItems)</span></a>  </li>
+        }
+
+        @Html.Widget("header_links_after")
+    </ul>
+    @Html.Action("FlyoutShoppingCart", "ShoppingCart")
+    @if (Model.ShoppingCartEnabled)
+    {
+        <script type="text/javascript">
+            $('#topcartlink').mouseenter(function () {
+                $('#flyout-cart').addClass('active');
+            });
+            $('#topcartlink').mouseleave(function () {
+                $('#flyout-cart').removeClass('active');
+            });
+            $('#flyout-cart').mouseenter(function () {
+                $('#flyout-cart').addClass('active');
+            });
+            $('#flyout-cart').mouseleave( function () {
+                $('#flyout-cart').removeClass('active');
+            });
+        </script>
+    }

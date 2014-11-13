@@ -1,0 +1,51 @@
+﻿@model NewsItemListModel
+@using Nop.Web.Extensions;
+@using Nop.Web.Models.News;
+@{
+    Layout = "~/Views/Shared/_ColumnsTwo.cshtml";
+
+    //title
+    Html.AddTitleParts(T("PageTitle.NewsArchive").Text);
+}
+<div class="page news-list-page">
+    <div class="page-title">
+        <h1>@T("News")</h1>
+    </div>
+    <div class="clear">
+    </div>
+    <div class="page-body">
+        @Html.Widget("newslist_page_before_items")
+        <div class="news-items">
+            @foreach (var item in Model.NewsItems)
+            {
+                <div class="panel panel-default">
+                    <div class="item panel-body">
+                        <h4>
+                            <a class="news-title" href="@Url.RouteUrl("NewsItem", new { SeName = item.SeName })">@item.Title</a>
+                        </h4> 
+                        <p>
+                            <span class="news-date">
+                                @item.CreatedOn.ToString("D")
+                            </span>
+                        </p>
+                        <div class="news-details">
+                            @Html.Raw(item.Short)
+                        </div>
+                        <a href="@Url.RouteUrl("NewsItem", new { SeName = item.SeName })" class="read-more">
+                            @T("News.MoreInfo")</a>
+                        @Html.Widget("newslist_page_inside_item")
+                    </div>
+                </div>
+                
+            }
+        </div>
+        <div class="pager">
+            @Html.Pager(Model.PagingFilteringContext).QueryParam("pagenumber")
+        </div>
+        @Html.Widget("newslist_page_after_items")
+    </div>
+    @*<a href="@Url.RouteUrl("NewsRSS", new { languageId = Model.WorkingLanguageId })" class="link-rss" title="@T("News.RSS.Hint")">@T("News.RSS")</a>*@
+    <a href="@Url.RouteUrl("NewsRSS", new { languageId = Model.WorkingLanguageId })" class="link-rss" title="@T("News.RSS.Hint")">
+        <img src="@Url.Content("~/Themes/bootswatch.nop.theme/Images/feed_24.png")" />
+    </a>
+</div>

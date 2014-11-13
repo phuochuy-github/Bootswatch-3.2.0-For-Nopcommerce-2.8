@@ -1,0 +1,65 @@
+﻿@model ProductOverviewModel
+@using Nop.Core.Domain.Orders
+@using Nop.Web.Models.Catalog;
+@{
+    //prepare "Add to cart" AJAX link
+    string addtocartlink = "";
+    var shoppingCartTypeId = (int)ShoppingCartType.ShoppingCart;
+    var quantity = 1;
+    if (Model.ProductPrice.ForceRedirectionAfterAddingToCart)
+    {
+        addtocartlink = Url.RouteUrl("AddProductToCart", new { productId = Model.Id, shoppingCartTypeId = shoppingCartTypeId, quantity = quantity, forceredirection = Model.ProductPrice.ForceRedirectionAfterAddingToCart });
+    }
+    else
+    {
+        addtocartlink = Url.RouteUrl("AddProductToCart", new { productId = Model.Id, shoppingCartTypeId = shoppingCartTypeId, quantity = quantity, });
+    }    
+}
+
+<div class="col-lg-4 col-sm-4 item-box">
+    <div class="thumbnail product-item" data-productid="@Model.Id">
+        <div class="picture">
+            <a href="@Url.RouteUrl("Product", new { SeName = Model.SeName })" title="@Model.DefaultPictureModel.Title">
+                <img id="img-item-@Model.Id" alt="@Model.DefaultPictureModel.AlternateText" src="@Model.DefaultPictureModel.ImageUrl" title="@Model.DefaultPictureModel.Title" />
+            </a>
+        </div>
+        <div class="caption text-center" title="@Model.DefaultPictureModel.Title">
+            <h4 title="@Model.Name">
+                @if (Model.Name.Length > 23)
+                {
+                    @Html.Encode(Model.Name.Substring(0, 23))
+                }
+                else
+                {
+                    @Html.Encode(Model.Name)
+                }
+            </h4>
+            <div class="add-info">
+                <div class="prices text-center">
+                    @if (!String.IsNullOrEmpty(Model.ProductPrice.OldPrice))
+                    {
+                        <div class="old-product-price">
+                            <span class="price">@Model.ProductPrice.OldPrice</span>
+                        </div>
+                        
+                    }
+                    <div class="product-price ">
+                        <span class="price">@Model.ProductPrice.Price</span>
+                    </div>
+
+                </div>
+                <div class="buttons text-center">
+                    @if (!Model.ProductPrice.DisableBuyButton)
+                    {
+                        <input class="btn btn-primary product-box-add-to-cart-button btn-xs"  type="button" value="@(Model.ProductPrice.AvailableForPreOrder ? T("ShoppingCart.PreOrder") : T("ShoppingCart.AddToCart"))" onclick="AjaxCart.addproducttocart('@addtocartlink');return false;" />
+                    }
+                    <a class="btn btn-default btn-xs" role="button" href="@Url.RouteUrl("Product", new { SeName = Model.SeName })">Chi Tiết</a>
+                </div>
+            </div>
+            
+        
+            
+        </div>
+    </div>
+    </div>
+

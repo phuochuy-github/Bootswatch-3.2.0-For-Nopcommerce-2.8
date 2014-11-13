@@ -1,0 +1,8 @@
+﻿Group: BootswatchTheme
+FriendlyName: BootswatchTheme Selector
+SystemName: BootswatchTheme.Selector
+Version: 1.00
+SupportedVersions: 2.80
+Author: Huy Mach Dev
+DisplayOrder: 1
+FileName: Nop.Plugin.BootswatchTheme.Selector.dll

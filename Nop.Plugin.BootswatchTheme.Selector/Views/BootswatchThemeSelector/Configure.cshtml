@@ -1,0 +1,49 @@
+﻿@{
+    Layout = "";
+}
+@model IList<Nop.Plugin.BootswatchTheme.Selector.Domain.SelectorRecord>
+@using Nop.Web.Framework;
+@using (Html.BeginForm())
+{
+    
+    <table class="adminContent">
+        <tbody>
+            <tr>
+                <td></td>
+                <td>
+                    @if (Session["CURRENT_THEME_ID"] != null)
+                    {
+                        <input type="hidden" value="@Session["CURRENT_THEME_ID"]" name="current_theme_id" />
+                    }
+                    else
+                    {
+                        <input type="hidden" value="1" name="current_theme_id" />
+                    }
+                    
+                </td>
+            </tr>
+            <tr>
+                <td class="adminTitle">
+                    @T("nop.plugin.bootswatchtheme.selector.themenamelabel")
+                </td>
+                <td class="adminData">
+                    <select name="new_theme_id">
+                        <option value="">Default</option>
+                        @foreach (var item in Model)
+                        {
+                            <option value="@item.ThemeId">@item.ThemeName</option>
+                        }
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    
+                </td>
+                <td>
+                    <input type="submit" value="submit" />
+                </td>
+            </tr>
+        </tbody>
+    </table>
+}

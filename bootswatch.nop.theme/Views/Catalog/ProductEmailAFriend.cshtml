@@ -1,0 +1,61 @@
+﻿@model ProductEmailAFriendModel
+@using Nop.Web.Models.Catalog;
+@{
+    Layout = "~/Views/Shared/_ColumnsTwo.cshtml";
+
+    //title
+    Html.AddTitleParts(Model.ProductName);
+    Html.AddTitleParts(T("PageTitle.ProductEmailAFriend").Text);
+}
+<div class="page email-a-friend-page">
+    <div class="page-title">
+        <h1>@T("Products.EmailAFriend.Title")</h1>
+    </div>
+    <div class="clear">
+    </div>
+    <div class="page-body">
+        @if (Model.SuccessfullySent)
+        {
+            <div class="result label label-success" style="margin-bottom: 10px;">
+                @Model.Result
+            </div>
+        }
+        else
+        {
+            using (Html.BeginForm())
+            {
+                <div class="row">
+                    <div class="col-xs-12 col-sm-6">
+                         @Html.ValidationSummary(true)
+                        <a href="@Url.RouteUrl("Product", new { SeName = Model.ProductSeName })" class="product">@Model.ProductName</a>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.FriendEmail)
+                            @Html.TextBoxFor(model => model.FriendEmail, new { @class = "friend-email form-control" })
+                            @Html.ValidationMessageFor(model => model.FriendEmail, null, new { @class="label label-danger" })
+                        </div>               
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.YourEmailAddress)
+                            @Html.TextBoxFor(model => model.YourEmailAddress, new { @class = "your-email form-control" })
+                            @Html.ValidationMessageFor(model => model.YourEmailAddress, null, new { @class="label label-danger" })
+                        </div>
+                        <div class="form-group">
+                            @if (Model.DisplayCaptcha)
+                            {
+                                <div class="captcha-box">
+                                    @Html.Raw(Html.GenerateCaptcha())
+                                </div>
+                            }
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.PersonalMessage)
+                            @Html.TextAreaFor(model => model.PersonalMessage, new { @class = "personal-message form-control", rows=7})
+                            @Html.ValidationMessageFor(model => model.PersonalMessage, null, new { @class="label label-danger" })
+                        </div>
+                        <input type="submit" name="send-email" class="btn btn-sm btn-success send-email-a-friend-button" value="@T("Products.EmailAFriend.Button")" />
+                    </div>
+                </div>
+                
+            }
+        }
+    </div>
+</div>

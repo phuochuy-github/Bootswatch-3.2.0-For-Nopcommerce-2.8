@@ -1,0 +1,10 @@
+﻿@{
+    Layout = "~/Views/Shared/_Root.cshtml";
+}
+<div class="col-lg-12 row">
+    <div class="col-xs-12 col-sm-12">
+        @Html.Widget("main_column_before")
+        @RenderBody()
+        @Html.Widget("main_column_after")
+    </div>
+</div>

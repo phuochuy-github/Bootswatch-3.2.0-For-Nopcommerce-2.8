@@ -1,0 +1,46 @@
+
+#SlideItMoo_outer_bestsellers{
+	overflow: hidden;
+	width: 100% !important; 
+    height: 380px;
+	margin: 0 auto; 
+	background: none; 
+	display:block; 
+	position:relative; 
+	padding: 0;
+}
+
+#SlideItMoo_outer_bestsellers .SlideItMoo_forward,
+#SlideItMoo_outer_bestsellers .SlideItMoo_back{ 
+	display:block; 
+	position:absolute; 
+	cursor:pointer; 
+	width: 35px; 
+	height: 100%; 
+	bottom:0px; 
+	right: 0px; 
+	background: url(icons/ArrowHead-Right.png) no-repeat center;
+}
+
+#SlideItMoo_outer_bestsellers .SlideItMoo_back { 
+	left:0px; 
+	background: url(icons/ArrowHead-Left.png) no-repeat center;  
+}
+#SlideItMoo_outer_free .SlideItMoo_back { 
+	left:0px; 
+	background: url(icons/ArrowHead-Left.png) no-repeat center;  
+}
+/* the width is set to show the number of thumbnails that will be visible */
+#SlideItMoo_inner_bestsellers{ 
+	position:relative ; 
+	overflow:hidden ; 
+	width: 90% !important; /* set a display width to make the slider look good in case js is disabled */
+	margin:0px auto 0px;
+	padding: 10px 0px 10px;  
+    height:100%;
+}
+/* the thumbnails container; set a width on it so everything will be fine */
+#SlideItMoo_items_bestsellers { 
+	display:block; 
+	position:relative; 
+}
